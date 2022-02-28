@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*v-clock 解决闪烁问题*/
+        [v-clock]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="vue" v-clock>
+    <div>{{info.name}}</div>
+    <div>{{info.address.city}}</div>
+    <a v-bind:href="info.url">百度</a>
+</div>
+
+<!--1.导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+<!--导入axios-->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script>
+    var vm = new Vue({
+        el : "#vue",
+        data : {
+            info: {
+
+            }
+        },
+        data(){
+           return{
+               info:{
+                   name:null,
+                   address:{
+                        street:null,
+                       city:null,
+                       country:null
+                   },
+                   url:null
+               }
+           }
+        },
+        mounted(){//钩子函数，链式编程 ES新特性
+            axios.get('data.json').then(response=>{this.info = response.data});
+        }
+    });
+</script>
+</body>
+</html>
